@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Planner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6e6;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #d147a3;
+    }
+    .card {
+      display: inline-block;
+      margin: 10px;
+      border: 2px solid #d147a3;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #fff;
+    }
+    .card img {
+      width: 150px;
+      height: 100px;
+      border-radius: 10px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #d147a3;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b73a8c;
+    }
+    .gif-container img {
+      width: 100px;
+      height: 100px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💕 Plan Your Perfect Date 💕</h1>
+  <div class="gif-container">
+    <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" alt="Heart GIF">
+  </div>
+
+  <!-- Date Confirmation -->
+  <div id="step1">
+    <h2>Do you want to plan a date?</h2>
+    <button onclick="proceedToStep2()">Yes</button>
+    <button onclick="alert('Maybe next time!')">No</button>
+  </div>
+
+  <!-- Select Date -->
+  <div id="step2" class="hidden">
+    <h2>Select a date for your date:</h2>
+    <input type="date" id="dateInput">
+    <button onclick="proceedToStep3()">Set Date</button>
+  </div>
+
+  <!-- Select Time -->
+  <div id="step3" class="hidden">
+    <h2>Select a time for your date:</h2>
+    <input type="time" id="timeInput">
+    <button onclick="proceedToStep4()">Set Time</button>
+  </div>
+
+  <!-- Food Selection -->
+  <div id="step4" class="hidden">
+    <h2>Pick your favorite food for the date:</h2>
+    <div class="card" onclick="selectFood('Adobo')">
+      <img src="https://example.com/adobo.jpg" alt="Adobo">
+      <p>Adobo</p>
+    </div>
+    <div class="card" onclick="selectFood('Sinigang')">
+      <img src="https://example.com/sinigang.jpg" alt="Sinigang">
+      <p>Sinigang</p>
+    </div>
+    <div class="card" onclick="selectFood('Lechon')">
+      <img src="https://example.com/lechon.jpg" alt="Lechon">
+      <p>Lechon</p>
+    </div>
+    <button onclick="proceedToStep5()">Next</button>
+  </div>
+
+  <!-- Movie Selection -->
+  <div id="step5" class="hidden">
+    <h2>Choose a movie or show for the date:</h2>
+    <select id="movieSelect">
+      <option value="Movie 1">Movie 1</option>
+      <option value="Movie 2">Movie 2</option>
+      <option value="Movie 3">Movie 3</option>
+      <option value="Movie 4">Movie 4</option>
+    </select>
+    <button onclick="proceedToStep6()">Next</button>
+  </div>
+
+  <!-- Excitement Level -->
+  <div id="step6" class="hidden">
+    <h2>How excited are you for this date?</h2>
+    <input type="range" min="1" max="10" id="excitementLevel">
+    <button onclick="finishPlanning()">Finish</button>
+  </div>
+
+  <!-- Reminder -->
+  <div id="reminder" class="hidden">
+    <h2>Your Date Reminder</h2>
+    <p id="reminderDetails"></p>
+    <div class="gif-container">
+      <img src="https://media.giphy.com/media/xT0GqnAbee1YMEz8Jy/giphy.gif" alt="Excited GIF">
+    </div>
+  </div>
+
+  <script>
+    let selectedDate = '';
+    let selectedTime = '';
+    let selectedFood = '';
+    let selectedMovie = '';
+
+    function proceedToStep2() {
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+    }
+
+    function proceedToStep3() {
+      selectedDate = document.getElementById('dateInput').value;
+      if (!selectedDate) {
+        alert('Please select a date.');
+        return;
+      }
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+    }
+
+    function proceedToStep4() {
+      selectedTime = document.getElementById('timeInput').value;
+      if (!selectedTime) {
+        alert('Please select a time.');
+        return;
+      }
+      document.getElementById('step3').classList.add('hidden');
+      document.getElementById('step4').classList.remove('hidden');
+    }
+
+    function selectFood(food) {
+      selectedFood = food;
+      alert(`${food} selected!`);
+    }
+
+    function proceedToStep5() {
+      if (!selectedFood) {
+        alert('Please select a food.');
+        return;
+      }
+      document.getElementById('step4').classList.add('hidden');
+      document.getElementById('step5').classList.remove('hidden');
+    }
+
+    function proceedToStep6() {
+      selectedMovie = document.getElementById('movieSelect').value;
+      document.getElementById('step5').classList.add('hidden');
+      document.getElementById('step6').classList.remove('hidden');
+    }
+
+    function finishPlanning() {
+      const excitementLevel = document.getElementById('excitementLevel').value;
+      document.getElementById('step6').classList.add('hidden');
+      document.getElementById('reminder').classList.remove('hidden');
+      document.getElementById('reminderDetails').innerHTML = `
+        Your date is set for <b>${selectedDate}</b> at <b>${selectedTime}</b>.<br>
+        You'll be enjoying <b>${selectedFood}</b> while watching <b>${selectedMovie}</b>.<br>
+        Excitement Level: <b>${excitementLevel}/10</b>
+      `;
+    }
+  </script>
+
+</body>
+</html>
